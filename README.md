@@ -1,14 +1,21 @@
+# Azure-Docker-WebApp
+
 Application web Python conteneurisée avec Docker. Projet réalisé dans le cadre de ma formation DevOps.
-Description
+
+## Description
+
 Application Flask simple qui affiche des informations système du conteneur. Le but est de montrer la maîtrise de Docker et de la conteneurisation.
-Technos utilisées
 
-Python 3.11
-Flask
-Docker
-Docker Compose
+## Technos utilisées
 
-Structure du projet
+- Python 3.11
+- Flask
+- Docker
+- Docker Compose
+
+## Structure du projet
+
+```
 .
 ├── app/
 │   ├── app.py
@@ -18,75 +25,110 @@ Structure du projet
 ├── Dockerfile
 ├── docker-compose.yml
 └── README.md
-Installation et utilisation
-Prérequis
+```
 
-Docker Desktop installé
-Git
+## Installation et utilisation
 
-Lancer le projet en local
+### Prérequis
 
-Cloner le repo
+- Docker Desktop installé
+- Git
 
-bashgit clone https://github.com/Pierre-DevOps/Azure-Docker-WebApp.git
+### Lancer le projet en local
+
+1. Cloner le repo
+
+```bash
+git clone https://github.com/Pierre-DevOps/Azure-Docker-WebApp.git
 cd Azure-Docker-WebApp
+```
 
-Build l'image Docker
+2. Build l'image Docker
 
-bashdocker build -t azure-docker-webapp:latest .
+```bash
+docker build -t azure-docker-webapp:latest .
+```
 
-Lancer le conteneur
+3. Lancer le conteneur
 
-bashdocker-compose up -d
+```bash
+docker-compose up -d
+```
 
-Accéder à l'application
+4. Accéder à l'application
 
 Ouvrir le navigateur sur http://localhost:8080
-Arrêter le conteneur
-bashdocker-compose down
-Commandes Docker utiles
+
+### Arrêter le conteneur
+
+```bash
+docker-compose down
+```
+
+## Commandes Docker utiles
+
 Voir les conteneurs actifs :
-bashdocker ps
+```bash
+docker ps
+```
+
 Voir les logs :
-bashdocker-compose logs -f
+```bash
+docker-compose logs -f
+```
+
 Entrer dans le conteneur :
-bashdocker exec -it azure-docker-webapp /bin/sh
-Points techniques
-Dockerfile
+```bash
+docker exec -it azure-docker-webapp /bin/sh
+```
 
-Image de base : Python 3.11 Alpine (légère)
-Utilisateur non-root pour la sécurité
-Health check intégré
-Multi-stage pour optimiser la taille
+## Points techniques
 
-Docker Compose
+### Dockerfile
 
-Port mapping : 8080 (host) -> 5000 (container)
-Restart automatique
-Limites de ressources définies
+- Image de base : Python 3.11 Alpine (légère)
+- Utilisateur non-root pour la sécurité
+- Health check intégré
+- Multi-stage pour optimiser la taille
 
-Déploiement Azure
+### Docker Compose
+
+- Port mapping : 8080 (host) -> 5000 (container)
+- Restart automatique
+- Limites de ressources définies
+
+## Déploiement Azure
+
 Un script de déploiement est fourni dans le dossier scripts/ pour déployer sur Azure Container Instances.
+
 Pour l'utiliser :
-bashaz login
+
+```bash
+az login
 cd scripts
 ./deploy-to-azure.sh
+```
+
 Le script va :
+- Créer un Resource Group
+- Créer un Azure Container Registry
+- Builder et pusher l'image
+- Déployer sur ACI
 
-Créer un Resource Group
-Créer un Azure Container Registry
-Builder et pusher l'image
-Déployer sur ACI
+## Compétences DevOps
 
-Compétences DevOps
 Ce projet démontre :
+- Conteneurisation avec Docker
+- Automatisation du build
+- Infrastructure as Code
+- Déploiement cloud
+- Bonnes pratiques de sécurité
 
-Conteneurisation avec Docker
-Automatisation du build
-Infrastructure as Code
-Déploiement cloud
-Bonnes pratiques de sécurité
+## Auteur
 
-Auteur
 Pierre - Étudiant Bachelor DevOps
 Formation : Administrateur Système DevOps (RNCP36061)
+
+## Notes
+
+Projet réalisé dans le cadre du CCP1 (Automatiser le déploiement d'une infrastructure dans le cloud).
