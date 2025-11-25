@@ -1,0 +1,123 @@
+# ===============================================
+# COMMANDES RAPIDES - Azure Docker WebApp
+# ===============================================
+
+# ================================
+# 1. TEST LOCAL AVEC DOCKER
+# ================================
+
+# Build de l'image
+docker build -t azure-docker-webapp:latest .
+
+# Lancer avec docker-compose (recommandé)
+docker-compose up -d
+
+# Voir les logs
+docker-compose logs -f
+
+# Accéder à l'application
+# URL : http://localhost:8080
+
+# Arrêter
+docker-compose down
+
+# ================================
+# 2. DÉPLOIEMENT AZURE (AUTOMATIQUE)
+# ================================
+
+# Se connecter à Azure
+az login
+
+# Lancer le déploiement
+cd scripts
+./deploy-to-azure.sh
+
+# ================================
+# 3. GESTION AZURE (APRÈS DÉPLOIEMENT)
+# ================================
+
+# Voir les logs du conteneur
+az container logs -g rg-docker-webapp-dev -n webapp-container
+
+# État du conteneur
+az container show -g rg-docker-webapp-dev -n webapp-container
+
+# Redémarrer
+az container restart -g rg-docker-webapp-dev -n webapp-container
+
+# Supprimer toutes les ressources
+az group delete -g rg-docker-webapp-dev --yes --no-wait
+
+# ================================
+# 4. COMMANDES DOCKER UTILES
+# ================================
+
+# Voir les images locales
+docker images
+
+# Voir les conteneurs en cours
+docker ps
+
+# Entrer dans le conteneur
+docker exec -it azure-docker-webapp /bin/sh
+
+# Nettoyer les ressources Docker
+docker system prune -a
+
+# ================================
+# 5. HEALTH CHECK
+# ================================
+
+# Test local
+curl http://localhost:8080/health
+
+# Test Azure (après déploiement)
+curl http://pierre-docker-webapp.francecentral.azurecontainer.io:5000/health
+
+# ================================
+# 6. CAPTURES D'ÉCRAN POUR LE DP
+# ================================
+
+# 1. Build local
+docker build -t azure-docker-webapp:latest .
+# → Capturer la sortie montrant les layers
+
+# 2. Test local
+docker-compose up -d
+# → Capturer http://localhost:8080
+
+# 3. Déploiement Azure
+./scripts/deploy-to-azure.sh
+# → Capturer la sortie avec l'URL finale
+
+# 4. Application sur Azure
+# → Capturer l'URL publique Azure
+
+# 5. Portail Azure
+# → Capturer le Resource Group avec ACR + ACI
+
+# ================================
+# 7. PERSONNALISATION
+# ================================
+
+# Changer le nom de l'ACR (dans deploy-to-azure.sh)
+# ACR_NAME="acrdockerpierredev"  # Doit être unique globalement
+
+# Changer le DNS (dans deploy-to-azure.sh)
+# DNS_NAME_LABEL="pierre-docker-webapp"  # Doit être unique par région
+
+# ================================
+# 8. TROUBLESHOOTING
+# ================================
+
+# Problème de build Docker
+docker build --no-cache -t azure-docker-webapp:latest .
+
+# Voir les logs détaillés Docker Compose
+docker-compose up
+
+# Problème Azure CLI
+az login --use-device-code
+
+# Vérifier les credentials ACR
+az acr credential show --name acrdockerpierredev

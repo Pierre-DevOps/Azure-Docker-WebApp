@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+pip-log.txt
+pip-delete-this-directory.txt
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# Docker
+*.log
+
+# Azure
+.azure/
+azure-credentials.json
+
+# Environnement
+.env
+.env.local
+*.local
+
+# Tests
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Documentation temporaire
+*.tmp
+*.bak

@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  # Service principal : notre application web
+  webapp:
+    # Nom du conteneur
+    container_name: azure-docker-webapp
+    
+    # Construction de l'image à partir du Dockerfile
+    build:
+      context: .
+      dockerfile: Dockerfile
+    
+    # Nom de l'image créée
+    image: azure-docker-webapp:latest
+    
+    # Redémarrage automatique en cas d'erreur
+    restart: unless-stopped
+    
+    # Mappage des ports : port_hote:port_conteneur
+    ports:
+      - "8080:5000"
+    
+    # Variables d'environnement
+    environment:
+      - ENVIRONMENT=Development
+      - FLASK_APP=app.py
+      - PYTHONUNBUFFERED=1
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/health')"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    
+    # Limites de ressources (bonnes pratiques)
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+    
+    # Labels pour documentation
+    labels:
+      - "com.azure.project=docker-webapp"
+      - "com.azure.environment=development"
+      - "com.azure.maintainer=pierre"
+
+# Réseau par défaut (bridge)
+networks:
+  default:
+    driver: bridge
